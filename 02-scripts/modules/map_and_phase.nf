@@ -42,6 +42,8 @@ process MAP_AND_PHASE {
     whatshap phase \
         --reference ${fasta} \
         --output ${meta.id}.phased.vcf.gz \
+        --ignore-read-groups \
+        --indels \
         ${vcf} \
         ${meta.id}.bam
 
