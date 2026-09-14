@@ -139,5 +139,5 @@ workflow PHASE_VCF {
     )
 
     emit:
-    phased_multisample_vcf = REBUILD_MULTISAMPLE_VCF.out.vcf
+    phased_multisample_vcf = REBUILD_MULTISAMPLE_VCF.out.phased_vcf
 }
