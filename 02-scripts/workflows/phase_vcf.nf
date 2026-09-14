@@ -126,7 +126,9 @@ workflow PHASE_VCF {
      * Rebuild final multisample VCF
      * -------------------------------------------------------------------------
      */
-    phased_vcfs = MAP_AND_PHASE.out.phased_vcf.collect()
+    phased_vcf_files = MAP_AND_PHASE.out.phased_vcf
+        .map { meta, vcf, tbi -> vcf }
+        .collect()
 
     REBUILD_MULTISAMPLE_VCF(
         INDEX_VCF.out.vcf
