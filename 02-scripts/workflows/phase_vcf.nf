@@ -102,7 +102,7 @@ workflow PHASE_VCF {
      * Join extracted VCFs with ONT reads
      * -------------------------------------------------------------------------
      */
-    phase_input = EXTRACT_SAMPLE_VCF.out.vcf
+    phase_input = BCFTOOLS_EXTRACT_SAMPLE.out.vcf
         .join(phaseable_samples, by: 0)
         .map { meta, vcf, tbi, meta2, reads ->
             tuple(
