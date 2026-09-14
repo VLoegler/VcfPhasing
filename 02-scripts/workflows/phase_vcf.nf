@@ -1,10 +1,10 @@
 nextflow.enable.dsl = 2
 
-include { INDEX_VCF            } from '../modules/index_vcf'
-include { INDEX_REFERENCE      } from '../modules/index_reference'
-include { LIST_VCF_SAMPLES     } from '../modules/list_vcf_samples'
-include { EXTRACT_SAMPLE_VCF   } from '../modules/extract_sample_vcf'
-include { MAP_AND_PHASE        } from '../modules/map_and_phase'
+include { INDEX_VCF               } from '../modules/index_vcf'
+include { INDEX_REFERENCE         } from '../modules/index_reference'
+include { LIST_VCF_SAMPLES        } from '../modules/list_vcf_samples'
+include { BCFTOOLS_EXTRACT_SAMPLE } from '../modules/bcftools_extract_sample'
+include { MAP_AND_PHASE           } from '../modules/map_and_phase'
 include { REBUILD_MULTISAMPLE_VCF } from '../modules/rebuild_multisample_vcf'
 
 workflow PHASE_VCF {
@@ -95,7 +95,7 @@ workflow PHASE_VCF {
      * Extract single-sample VCFs
      * -------------------------------------------------------------------------
      */
-    EXTRACT_SAMPLE_VCF(sample_vcf_input)
+    BCFTOOLS_EXTRACT_SAMPLE(sample_vcf_input)
 
     /*
      * -------------------------------------------------------------------------
