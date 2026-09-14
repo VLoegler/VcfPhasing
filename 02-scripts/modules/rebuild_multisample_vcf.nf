@@ -1,6 +1,6 @@
 process REBUILD_MULTISAMPLE_VCF {
 
-    label "process_medium"
+    label "process_high"
 
     input:
     tuple path(original_vcf),
