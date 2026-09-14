@@ -78,10 +78,7 @@ workflow PHASE_VCF {
      */
     sample_vcf_input = phaseable_samples
         .combine(INDEX_VCF.out.vcf)
-        .map { sample_tuple, vcf_tuple ->
-
-            def (meta_reads, reads) = sample_tuple
-            def (meta_vcf, vcf, tbi) = vcf_tuple
+        .map { meta_reads, reads, meta_vcf, vcf, tbi ->
 
             tuple(
                 meta_reads,
@@ -104,7 +101,7 @@ workflow PHASE_VCF {
      */
     phase_input = BCFTOOLS_EXTRACT_SAMPLE.out.vcf
         .join(phaseable_samples, by: 0)
-        .map { meta, vcf, tbi, meta2, reads ->
+        .map { meta, vcf, tbi, reads ->
             tuple(
                 meta,
                 vcf,
