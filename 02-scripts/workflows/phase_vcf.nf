@@ -135,7 +135,7 @@ workflow PHASE_VCF {
             .map { meta, vcf, tbi ->
                 tuple(vcf, tbi)
             }, 
-        phased_vcfs
+        phased_vcf_files
     )
 
     emit:
