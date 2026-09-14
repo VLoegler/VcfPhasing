@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: mambaorg/micromamba:latest
+
+%files
+    envs/phasevcf.yml
+
+%post
+    micromamba install \
+        -y \
+        -n base \
+        -f envs/phasevcf.yml
+
+    micromamba clean --all --yes
+
+%environment
+    export PATH=/opt/conda/bin:$PATH
+
+%runscript
+    exec "$@"
+
+# apptainer build containers/phasevcf.sif containers/phasevcf.def
