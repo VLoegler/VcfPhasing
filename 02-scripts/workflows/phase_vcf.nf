@@ -109,15 +109,15 @@ workflow PHASE_VCF {
                 reads
             )
         }
-    phase_input.view()
 
     /*
      * -------------------------------------------------------------------------
      * Mapping + WhatsHap phasing
      * -------------------------------------------------------------------------
      */
+    reference_files = INDEX_REFERENCE.out.reference.first()
     MAP_AND_PHASE(
-        INDEX_REFERENCE.out.reference,
+        reference_files,
         phase_input,
     )
 
