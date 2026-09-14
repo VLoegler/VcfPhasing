@@ -80,11 +80,11 @@ workflow PHASE_VCF {
         .combine(INDEX_VCF.out.vcf)
         .map { sample_tuple, vcf_tuple ->
 
-            def (meta, reads) = sample_tuple
-            def (_, vcf, tbi) = vcf_tuple
+            def (meta_reads, reads) = sample_tuple
+            def (meta_vcf, vcf, tbi) = vcf_tuple
 
             tuple(
-                meta,
+                meta_reads,
                 vcf,
                 tbi
             )
