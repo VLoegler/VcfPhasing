@@ -21,7 +21,7 @@ process MERGE_VCFS {
 
     """
     ulimit -n 4096
-    
+
     bcftools merge \
         -r ${chr} \
         --threads ${task.cpus} \
@@ -29,6 +29,7 @@ process MERGE_VCFS {
     bcftools view \
         --threads ${task.cpus} \
         -S ${samples_order} \
+        --force-samples \
         -Oz \
         -o ${chr}.multisample.phased.vcf.gz
 
