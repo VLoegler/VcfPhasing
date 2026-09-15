@@ -157,15 +157,13 @@ workflow PHASE_VCF {
         .mix(unphaseable_vcfs)
 
     merged_vcfs = merged_files
-        .map { rows ->
-            rows.collect { it[1] }
-        }
+        .map { meta, vcf, tbi -> vcf }
+        .collect()
     merged_vcfs.view()
 
     merged_tbis = merged_files
-        .map { rows ->
-            rows.collect { it[2] }
-        }
+        .map { meta, vcf, tbi -> tbi }
+        .collect()
 
     sample_order = LIST_VCF_SAMPLES.out.samples
 
