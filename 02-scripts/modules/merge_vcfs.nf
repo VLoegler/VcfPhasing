@@ -5,13 +5,14 @@ process MERGE_VCFS {
     label "process_high"
 
     input:
+    val chr
     path vcfs
     path tbis
     path samples_order
 
     output:
-    tuple path("multisample.phased.vcf.gz"),
-          path("multisample.phased.vcf.gz.tbi"),
+    tuple path("${chr}.multisample.phased.vcf.gz"),
+          path("${chr}.multisample.phased.vcf.gz.tbi"),
           emit: phased_vcf
 
     script:
@@ -20,23 +21,24 @@ process MERGE_VCFS {
 
     """
     bcftools merge \
+        -r ${chr} \
         --threads ${task.cpus} \
         ${vcf_list} | \
     bcftools view \
         --threads ${task.cpus} \
         -S ${samples_order} \
         -Oz \
-        -o multisample.phased.vcf.gz
+        -o ${chr}.multisample.phased.vcf.gz
 
     tabix \
         -f \
         -p vcf \
-        multisample.phased.vcf.gz
+        ${chr}.multisample.phased.vcf.gz
     """
 
     stub:
     """
-    touch multisample.phased.vcf.gz
-    touch multisample.phased.vcf.gz.tbi
+    touch ${chr}.multisample.phased.vcf.gz
+    touch ${chr}.multisample.phased.vcf.gz.tbi
     """
 }

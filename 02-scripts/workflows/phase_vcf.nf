@@ -166,7 +166,15 @@ workflow PHASE_VCF {
 
     sample_order = LIST_VCF_SAMPLES.out.samples
 
+    ch_chr = Channel.of(
+        "chromosome1", "chromosome2", "chromosome3", "chromosome4",
+        "chromosome5", "chromosome6", "chromosome7", "chromosome8",
+        "chromosome9", "chromosome10", "chromosome11", "chromosome12",
+        "chromosome13", "chromosome14", "chromosome15", "chromosome16"
+    )
+
     MERGE_VCFS(
+        ch_chr, 
         merged_vcfs,
         merged_tbis,
         sample_order
