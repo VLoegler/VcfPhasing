@@ -158,10 +158,12 @@ workflow PHASE_VCF {
 
     merged_vcfs = merged_files
         .map { meta, vcf, tbi -> vcf }
+        .take(100)
         .collect()
 
     merged_tbis = merged_files
         .map { meta, vcf, tbi -> tbi }
+        .take(100)
         .collect()
 
     sample_order = LIST_VCF_SAMPLES.out.samples.first()
