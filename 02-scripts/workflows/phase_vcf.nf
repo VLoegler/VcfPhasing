@@ -173,8 +173,6 @@ workflow PHASE_VCF {
         "chromosome13", "chromosome14", "chromosome15", "chromosome16"
     )
 
-    ch_chr.view()
-
     MERGE_VCFS(
         ch_chr, 
         merged_vcfs,
