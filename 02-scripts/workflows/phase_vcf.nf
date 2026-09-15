@@ -164,7 +164,7 @@ workflow PHASE_VCF {
         .map { meta, vcf, tbi -> tbi }
         .collect()
 
-    sample_order = LIST_VCF_SAMPLES.out.samples
+    sample_order = LIST_VCF_SAMPLES.out.samples.first()
 
     ch_chr = Channel.of(
         "chromosome1", "chromosome2", "chromosome3", "chromosome4",
