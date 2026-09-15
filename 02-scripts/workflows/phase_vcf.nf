@@ -42,6 +42,8 @@ workflow PHASE_VCF {
         .map { sample ->
             [ id: sample ]
         }
+    vcf_ids = vcf_samples
+        .map { it.id }
 
     /*
     * Read samples already available from the reads channel
@@ -52,6 +54,14 @@ workflow PHASE_VCF {
                 meta.id,
                 reads
             )
+        }
+    valid_reads = read_sample_ids
+        .join(
+            vcf_ids.map { id -> tuple(id, true) },
+            by: 0
+        )
+        .map { sample_id, reads, dummy ->
+            tuple(sample_id, reads)
         }
 
     /*
@@ -92,10 +102,7 @@ workflow PHASE_VCF {
      * -------------------------------------------------------------------------
      */
     phase_input = sample_vcfs
-        .join(
-            read_sample_ids,
-            by: 0
-        )
+        .join(valid_reads, by:0)
         .map { sample_id, meta, vcf, tbi, reads ->
 
             tuple(
@@ -131,9 +138,9 @@ workflow PHASE_VCF {
         .view()
     unphaseable_vcfs = sample_vcfs
         .join(
-            read_sample_ids,
-            by: 0,
-            remainder: true
+            valid_reads,
+            by:0,
+            remainder:true
         )
         .filter { sample_id, meta, vcf, tbi, reads ->
             reads == null
