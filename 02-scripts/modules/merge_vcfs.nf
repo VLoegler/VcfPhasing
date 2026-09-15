@@ -20,6 +20,8 @@ process MERGE_VCFS {
     def vcf_list = vcfs.join(' ')
 
     """
+    ulimit -n 4096
+    
     bcftools merge \
         -r ${chr} \
         --threads ${task.cpus} \
