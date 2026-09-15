@@ -159,7 +159,6 @@ workflow PHASE_VCF {
     merged_vcfs = merged_files
         .map { meta, vcf, tbi -> vcf }
         .collect()
-    merged_vcfs.view()
 
     merged_tbis = merged_files
         .map { meta, vcf, tbi -> tbi }
