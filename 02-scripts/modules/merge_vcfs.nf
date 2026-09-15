@@ -2,7 +2,7 @@
 
 process MERGE_VCFS {
 
-    label "process_high"
+    label "process_higher"
 
     input:
     val chr
