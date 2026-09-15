@@ -122,6 +122,13 @@ workflow PHASE_VCF {
      * Identify unphaseable samples
      * -------------------------------------------------------------------------
      */
+    sample_vcfs
+        .join(
+            read_sample_ids,
+            by: 0,
+            remainder: true
+        )
+        .view()
     unphaseable_vcfs = sample_vcfs
         .join(
             read_sample_ids,
