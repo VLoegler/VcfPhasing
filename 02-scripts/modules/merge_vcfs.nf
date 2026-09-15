@@ -23,7 +23,7 @@ process MERGE_VCFS {
         ${vcf_list} | \
     bcftools view \
         --threads ${task.cpus} \
-        -S ${sample_order} \
+        -S ${samples_order} \
         -Oz \
         -o multisample.phased.vcf.gz
 
