@@ -6,6 +6,7 @@ include { LIST_VCF_SAMPLES        } from '../modules/list_vcf_samples'
 include { BCFTOOLS_EXTRACT_SAMPLE } from '../modules/bcftools_extract_sample'
 include { MAP_AND_PHASE           } from '../modules/map_and_phase'
 include { MERGE_VCFS              } from '../modules/merge_vcfs'
+include { CONCAT_CHROMOSOMES      } from '../modules/concat_chromosomes'
 
 workflow PHASE_VCF {
 
@@ -180,6 +181,21 @@ workflow PHASE_VCF {
         sample_order
     )
 
+    merged_chr_vcfs = MERGE_VCFS.out.phased_vcf
+
+    concat_vcfs = merged_chr_vcfs
+        .map { vcf, tbi -> vcf }
+        .collect()
+
+    concat_tbis = merged_chr_vcfs
+        .map { vcf, tbi -> tbi }
+        .collect()
+
+    CONCAT_CHROMOSOMES(
+        concat_vcfs,
+        concat_tbis
+    )
+
     emit:
-    phased_multisample_vcf = MERGE_VCFS.out.phased_vcf
+    phased_multisample_vcf = CONCAT_CHROMOSOMES.out.vcf
 }
