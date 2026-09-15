@@ -153,14 +153,14 @@ workflow PHASE_VCF {
      * -------------------------------------------------------------------------
      */
      merged_files =
-    MAP_AND_PHASE.out.phased_vcf
+        MAP_AND_PHASE.out.phased_vcf
         .mix(unphaseable_vcfs)
-    merged_files.view()
 
     merged_vcfs = merged_files
         .map { rows ->
             rows.collect { it[1] }
         }
+    merged_vcfs.view()
 
     merged_tbis = merged_files
         .map { rows ->
