@@ -6,6 +6,7 @@ process MERGE_VCFS {
 
     input:
     path vcfs
+    path tbis
     path samples_order
 
     output:

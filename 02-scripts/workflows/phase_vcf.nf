@@ -152,16 +152,25 @@ workflow PHASE_VCF {
      * Rebuild final multisample VCF
      * -------------------------------------------------------------------------
      */
-    merged_vcfs =
-        MAP_AND_PHASE.out.phased_vcf
+     merged_files =
+    MAP_AND_PHASE.out.phased_vcf
         .mix(unphaseable_vcfs)
-        .map { meta, vcf, tbi -> vcf }
         .collect()
+
+    merged_vcfs = merged_files.map { rows ->
+        rows.collect { it[1] }
+    }
+
+    merged_tbis = merged_files.map { rows ->
+        rows.collect { it[2] }
+    }
+
     sample_order = LIST_VCF_SAMPLES.out.samples
 
     MERGE_VCFS(
-        merged_vcfs, 
-        sample_order,
+        merged_vcfs,
+        merged_tbis,
+        sample_order
     )
 
     emit:
